@@ -5,10 +5,13 @@ import { TodoItemType } from "../App";
 type Props = {
   todoItem: TodoItemType;
   onDelete: (id: number) => void;
+  onEdit: (todoId: number, string: string) => void;
 };
 
-const TodoItem = ({ todoItem, onDelete }: Props) => {
+const TodoItem = ({ todoItem, onDelete, onEdit }: Props) => {
   const [isComplete, setIsComplete] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [editText, setEditText] = useState(todoItem.title);
 
   return (
     <Container $isComplete={isComplete}>
@@ -16,16 +19,41 @@ const TodoItem = ({ todoItem, onDelete }: Props) => {
         type="checkbox"
         className="complete-check"
         checked={isComplete}
-        onChange={() => null}
+        onChange={e => {
+          setIsComplete(e.target.checked);
+        }}
       />
 
       <div className="content">
-        <h3 className="title">{todoItem.title}</h3>
+        {isEdit ? (
+          <input
+            type="text"
+            className="edit-input"
+            value={editText}
+            onChange={e => {
+              setEditText(e.target.value);
+            }}
+          />
+        ) : (
+          <p className="title">{todoItem.title}</p>
+        )}
       </div>
 
       {!isComplete && (
         <div className="button-group">
-          <button>수정</button>
+          {isEdit ? (
+            <button
+              className="primary"
+              onClick={() => {
+                onEdit(todoItem.id, editText);
+                setIsEdit(false);
+              }}
+            >
+              완료
+            </button>
+          ) : (
+            <button onClick={() => setIsEdit(true)}>수정</button>
+          )}
           <button onClick={() => onDelete(todoItem.id)}>삭제</button>
         </div>
       )}
@@ -58,11 +86,27 @@ const Container = styled.div<{ $isComplete: boolean }>`
     gap: 10px;
   }
 
+  .content {
+    width: 100%;
+
+    .edit-input {
+      margin: 17px 0;
+      width: 90%;
+      height: 23px;
+      font-size: 16px;
+      outline: none;
+    }
+  }
+
   .button-group {
     margin-left: auto;
 
     > button {
       width: max-content;
+    }
+
+    .primary {
+      background-color: #0f7aed;
     }
   }
 `;

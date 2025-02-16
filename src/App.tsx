@@ -44,6 +44,16 @@ function App() {
         onDelete={todoId => {
           setTodoList(todoList.filter(todoItem => todoItem.id !== todoId));
         }}
+        onEdit={(todoId, title) => {
+          setTodoList(
+            todoList.map(todoItem => {
+              if (todoItem.id === todoId) {
+                return { ...todoItem, title };
+              }
+              return todoItem;
+            })
+          );
+        }}
       />
     </Container>
   );
@@ -55,10 +65,14 @@ const Container = styled.div`
   width: 500px;
   max-width: 500px;
 
-  .create-input {
-    width: 100%;
-    height: 40px;
-    outline: none;
-    font-size: 20px;
+  form {
+    margin-bottom: 20px;
+
+    .create-input {
+      width: 100%;
+      height: 40px;
+      outline: none;
+      font-size: 20px;
+    }
   }
 `;
