@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { TodoItemType } from "./TodoList";
+import { TodoItemType } from "../App";
 
 type Props = {
   todoItem: TodoItemType;
@@ -10,12 +10,16 @@ const TodoItem = ({ todoItem }: Props) => {
   const [isComplete, setIsComplete] = useState(false);
 
   return (
-    <Container isComplete={isComplete}>
-      <input type="checkbox" className="complete-check" checked={isComplete} />
+    <Container $isComplete={isComplete}>
+      <input
+        type="checkbox"
+        className="complete-check"
+        checked={isComplete}
+        onChange={() => null}
+      />
 
       <div className="content">
         <h3 className="title">{todoItem.title}</h3>
-        <p className="message">{todoItem.message}</p>
       </div>
 
       {!isComplete && (
@@ -30,7 +34,7 @@ const TodoItem = ({ todoItem }: Props) => {
 
 export default TodoItem;
 
-const Container = styled.div<{ isComplete: boolean }>`
+const Container = styled.div<{ $isComplete: boolean }>`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -45,7 +49,7 @@ const Container = styled.div<{ isComplete: boolean }>`
   .message {
     min-width: 200px;
     font-size: 18px;
-    ${({ isComplete }) => isComplete && "text-decoration: line-through"};
+    ${({ $isComplete }) => $isComplete && "text-decoration: line-through"};
   }
 
   .content,

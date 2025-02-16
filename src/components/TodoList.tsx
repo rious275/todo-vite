@@ -1,23 +1,13 @@
-import { useState } from "react";
+import { TodoItemType } from "../App";
 import TodoItem from "./TodoItem";
 
-export type TodoItemType = {
-  id: number;
-  title: string;
-  message: string;
+type Props = {
+  todoList: TodoItemType[];
 };
 
-const TodoList = () => {
-  const [todoList, setTodoList] = useState<TodoItemType[]>([
-    {
-      id: 1,
-      title: "첫 번째 할 일 입니다.",
-      message: "프로젝트 생성하고 기능 개발",
-    },
-  ]);
-
+const TodoList = ({ todoList }: Props) => {
   return todoList.map(todoItem => {
-    return <TodoItem todoItem={todoItem} />;
+    return <TodoItem key={`${todoItem.id}`} todoItem={todoItem} />;
   });
 };
 
