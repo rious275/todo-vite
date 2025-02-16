@@ -25,6 +25,7 @@ function App() {
         title: inputText,
       },
     ]);
+    setInputText("");
   };
 
   return (
