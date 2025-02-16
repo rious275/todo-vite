@@ -38,7 +38,12 @@ function App() {
           onChange={e => setInputText(e.target.value)}
         />
       </form>
-      <TodoList todoList={todoList} />
+      <TodoList
+        todoList={todoList}
+        onDelete={todoId => {
+          setTodoList(todoList.filter(todoItem => todoItem.id !== todoId));
+        }}
+      />
     </Container>
   );
 }
@@ -46,7 +51,7 @@ function App() {
 export default App;
 
 const Container = styled.div`
-  width: 100%;
+  width: 600px;
 
   .create-input {
     padding: 0 8px;

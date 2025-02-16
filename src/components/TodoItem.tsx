@@ -4,9 +4,10 @@ import { TodoItemType } from "../App";
 
 type Props = {
   todoItem: TodoItemType;
+  onDelete: (id: number) => void;
 };
 
-const TodoItem = ({ todoItem }: Props) => {
+const TodoItem = ({ todoItem, onDelete }: Props) => {
   const [isComplete, setIsComplete] = useState(false);
 
   return (
@@ -25,7 +26,7 @@ const TodoItem = ({ todoItem }: Props) => {
       {!isComplete && (
         <div className="button-group">
           <button>수정</button>
-          <button>삭제</button>
+          <button onClick={() => onDelete(todoItem.id)}>삭제</button>
         </div>
       )}
     </Container>
@@ -45,9 +46,12 @@ const Container = styled.div<{ $isComplete: boolean }>`
     height: 16px;
   }
 
+  .title {
+    min-width: 380px;
+  }
+
   .title,
   .message {
-    min-width: 200px;
     font-size: 18px;
     ${({ $isComplete }) => $isComplete && "text-decoration: line-through"};
   }
