@@ -1,11 +1,7 @@
 import { FormEvent, useState } from "react";
 import styled from "styled-components";
 import TodoList from "./components/TodoList";
-
-export type TodoItemType = {
-  id: number;
-  title: string;
-};
+import { TodoListType } from "./types/common";
 
 const INITIAL_TODO = {
   id: Date.now(),
@@ -13,7 +9,7 @@ const INITIAL_TODO = {
 };
 
 function App() {
-  const [todoList, setTodoList] = useState<TodoItemType[]>([INITIAL_TODO]);
+  const [todoList, setTodoList] = useState<TodoListType>([INITIAL_TODO]);
   const [inputText, setInputText] = useState("");
 
   const createTodo = (e: FormEvent) => {
@@ -26,6 +22,19 @@ function App() {
       },
     ]);
     setInputText("");
+  };
+
+  const onDelete = (todoId: number) => {
+    setTodoList(todoList.filter(todoItem => todoItem.id !== todoId));
+  };
+
+  const onEdit = (todoId: number, title: string) => {
+    setTodoList(
+      todoList.map(todoItem => {
+        if (todoItem.id !== todoId) return todoItem;
+        return { ...todoItem, title };
+      })
+    );
   };
 
   return (
@@ -41,19 +50,8 @@ function App() {
       </form>
       <TodoList
         todoList={todoList}
-        onDelete={todoId => {
-          setTodoList(todoList.filter(todoItem => todoItem.id !== todoId));
-        }}
-        onEdit={(todoId, title) => {
-          setTodoList(
-            todoList.map(todoItem => {
-              if (todoItem.id === todoId) {
-                return { ...todoItem, title };
-              }
-              return todoItem;
-            })
-          );
-        }}
+        onDelete={todoId => onDelete(todoId)}
+        onEdit={(todoId, title) => onEdit(todoId, title)}
       />
     </Container>
   );

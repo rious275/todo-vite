@@ -1,10 +1,8 @@
-import { TodoItemType } from "../App";
+import { TodoCommonPropsType, TodoListType } from "../types/common";
 import TodoItem from "./TodoItem";
 
-type Props = {
-  todoList: TodoItemType[];
-  onDelete: (todoId: number) => void;
-  onEdit: (todoId: number, title: string) => void;
+type Props = TodoCommonPropsType & {
+  todoList: TodoListType;
 };
 
 const TodoList = ({ todoList, onDelete, onEdit }: Props) => {

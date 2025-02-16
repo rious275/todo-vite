@@ -1,11 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { TodoItemType } from "../App";
+import { TodoCommonPropsType, TodoItemType } from "../types/common";
 
-type Props = {
+type Props = TodoCommonPropsType & {
   todoItem: TodoItemType;
-  onDelete: (id: number) => void;
-  onEdit: (todoId: number, string: string) => void;
 };
 
 const TodoItem = ({ todoItem, onDelete, onEdit }: Props) => {
