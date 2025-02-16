@@ -46,10 +46,6 @@ const Container = styled.div<{ $isComplete: boolean }>`
     height: 16px;
   }
 
-  .title {
-    min-width: 380px;
-  }
-
   .title,
   .message {
     font-size: 18px;
@@ -62,11 +58,11 @@ const Container = styled.div<{ $isComplete: boolean }>`
     gap: 10px;
   }
 
-  .content {
-    margin-right: 40px;
-  }
+  .button-group {
+    margin-left: auto;
 
-  .button-group > button {
-    width: max-content;
+    > button {
+      width: max-content;
+    }
   }
 `;

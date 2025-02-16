@@ -52,10 +52,10 @@ function App() {
 export default App;
 
 const Container = styled.div`
-  width: 600px;
+  width: 500px;
+  max-width: 500px;
 
   .create-input {
-    padding: 0 8px;
     width: 100%;
     height: 40px;
     outline: none;
