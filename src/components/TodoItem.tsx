@@ -1,15 +1,19 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { TodoCommonPropsType, TodoItemType } from "../types/common";
+import { useTodoListStore } from "../store/useTodoListStore";
+import { TodoItemType } from "../types/common";
 
-type Props = TodoCommonPropsType & {
+type Props = {
   todoItem: TodoItemType;
 };
 
-const TodoItem = ({ todoItem, onDelete, onEdit }: Props) => {
+const TodoItem = ({ todoItem }: Props) => {
   const [isComplete, setIsComplete] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [editText, setEditText] = useState(todoItem.title);
+
+  const editTodo = useTodoListStore(state => state.editTodo);
+  const deleteTodo = useTodoListStore(state => state.deleteTodo);
 
   return (
     <Container $isComplete={isComplete}>
@@ -43,7 +47,7 @@ const TodoItem = ({ todoItem, onDelete, onEdit }: Props) => {
             <button
               className="primary"
               onClick={() => {
-                onEdit(todoItem.id, editText);
+                editTodo(todoItem.id, editText);
                 setIsEdit(false);
               }}
             >
@@ -52,7 +56,7 @@ const TodoItem = ({ todoItem, onDelete, onEdit }: Props) => {
           ) : (
             <button onClick={() => setIsEdit(true)}>수정</button>
           )}
-          <button onClick={() => onDelete(todoItem.id)}>삭제</button>
+          <button onClick={() => deleteTodo(todoItem.id)}>삭제</button>
         </div>
       )}
     </Container>
